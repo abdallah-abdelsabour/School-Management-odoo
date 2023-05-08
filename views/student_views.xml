@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+        <record id="iti_student_form_view" model="ir.ui.view">
+            <field name="name">Students Form View</field>
+            <field name="model">iti.student</field>
+<!--            <field name="view_mode">tree,form</field>-->
+            <field name="arch" type="xml">
+
+                <form>
+                    <header>
+            <!--       type is object or action                       -->
+                        <button name="%(iti_track_wizard_action)d" type="action" string="Create New Track" />
+                        <button name="set_to_new" type="object" string="Set To New" attrs="{'invisible':[('state','!=','interviewing')]}" />
+                        <button name="set_to_interview" type="object" string="Set To Interview" attrs="{'invisible':[('state','=','interviewing')]}" />
+                        <button name="set_to_accepted" type="object" string="Accepted" attrs="{'invisible':[('state','in',('accepted','rejected'))]}" />
+                         <button name="set_to_rejected" type="object" string="Rejected" attrs="{'invisible':[('state','in',('accepted','rejected'))]}" />
+                        <field name="state" widget="statusbar"  statusbar_visible="new,interviewing,accepted"/>
+                    </header>
+                    <sheet>
+                        <group string="Personal Information">
+                            <group>
+<!--                                required , readonly,invisible ,attrs  -->
+                                 <field name="name" />
+<!--                                 <field name="state" />-->
+
+                                <!--   only  manager group can see email field  -->
+                                <field name="email" groups="school_management.iti_school_manager"/>
+
+                                <field name="track_id" required="True" domain="[('is_open','=','True')]"/>
+                                <!--  =,!=,>,>=,<,<=,like,ilike,in,not in   -->
+                                <field name="branch_track" attrs="{'invisible':[('track_id','=',False)]}"/>
+                            </group>
+                              <group>
+                                  <field name="birthdate" />
+
+                                  <field name="age" />
+                                  <field name="computed_age" />
+                                  <field name="info" />
+                            </group>
+ <group>
+                                   <field name="salary" />
+                                <field name="gender" />
+                                <field name="avatar" />
+                                <field name="skills_ids" widget="many2many_tags" />
+                            </group>
+
+
+                        </group>
+                        <group string="Interview Information">
+                            <field name="interview_time" />
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="iti_student_tree_view" model="ir.ui.view">
+            <field name="name">Student Tree View</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="birthdate" />
+                    <field name="email" />
+                </tree>
+            </field>
+        </record>
+
+
+<record id="iti_student_action" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">iti.student</field>
+            <field name="view_mode">tree,form</field>
+</record>
+    </data>
+</odoo>

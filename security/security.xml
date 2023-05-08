@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+
+        <record id="iti_school_category" model="ir.module.category">
+            <field name="name">ITI school Management</field>
+        </record>
+
+
+        <record id="iti_school_user" model="res.groups">
+            <field name="name">School User</field>
+            <field name="category_id" ref="iti_school_category" />
+        </record>
+
+         <record id="iti_school_manager" model="res.groups">
+            <field name="name">School Manager</field>
+             <field name="category_id" ref="iti_school_category" />
+             <field name="implied_ids" eval="[(4,ref('iti_school_user'))]" />
+
+
+        </record>
+
+            <!--  Record Rule        -->
+          <record id="iti_view_own_student" model="ir.rule">
+            <field name="name">Show only own students</field>
+              <field name="model_id" ref="model_iti_student" />
+
+<!--              to apply on specific group not all groups manager should be show all students-->
+<!--              4 => link (add) the id (iti_school_user) in many2many field this   -->
+
+              <field name="groups" eval="[(4,ref('iti_school_user'))]" />
+<!--                OR this syntax in odoo 15-->
+<!--              <field name="groups" eval="Command.link(ref('iti_school_user'))" />-->
+<!--        =,  &lt; , &gt; ,  &lt=     -->
+              <field name="domain_force">[('create_uid','=',user.id)]</field>
+
+<!--              ده الديفولت بتاع الاودوو ده لو عايز ان مثلا لو اليوز لو عايز يعدل علي طالب هو مدخلهوش ف يطلع ايرور-->
+
+<!--              <field name="perm_read">1</field>-->
+<!--              <field name="perm_write">1</field>-->
+<!--              <field name="perm_create">1</field>-->
+<!--              <field name="perm_unlink">1</field>-->
+
+        </record>
+
+
+                  <record id="iti_view_all_student" model="ir.rule">
+            <field name="name">Show only all students</field>
+              <field name="model_id" ref="model_iti_student" />
+              <field name="groups" eval="[(4,ref('iti_school_manager'))]" />
+              <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+
+    </data>
+</odoo>

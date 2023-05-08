@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+<menuitem id="iti_student_root_menu" name="School Management">
+        <menuitem id="iti_manage_menu" name="Manage">
+            <menuitem id="iti_student_menu" name="Students" action="iti_student_action" />
+            <menuitem id="iti_track_menu" name="Track" action="iti_track_action"/>
+            <menuitem id="iti_skill_menu" name="Skills" action="iti_skill_action"/>
+        </menuitem>
+  </menuitem>
+</data>
+</odoo>
